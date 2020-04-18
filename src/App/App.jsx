@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 
 import { history, Role } from '@/_helpers';
@@ -7,8 +7,12 @@ import { PrivateRoute } from '@/_components';
 import { HomePage } from '@/HomePage';
 import { AdminPage } from '@/AdminPage';
 import { LoginPage } from '@/LoginPage';
+import Tunnitleimaus from '../AdminPage/Tunnitleimaus';
+import UserFetch from '../AdminPage/UserFetch';
+import Opettaja from '../AdminPage/Opettaja';
+import CreateUser from '../Homepage/CreateUser';
 
-class App extends React.Component {
+class App extends Component {
     constructor(props) {
         super(props);
 
@@ -27,20 +31,24 @@ class App extends React.Component {
 
     logout() {
         authenticationService.logout();
-        history.push('/login');
+        history.push('/login');    
     }
-
     render() {
         const { currentUser, isAdmin } = this.state;
+        console.log(currentUser);
         return (
             <Router history={history}>
                 <div>
                     {currentUser &&
                         <nav className="navbar navbar-expand navbar-dark bg-dark">
                             <div className="navbar-nav">
-                                <Link to="/" className="nav-item nav-link">Home</Link>
-                                {isAdmin && <Link to="/admin" className="nav-item nav-link">Admin</Link>}
-                                <a onClick={this.logout} className="nav-item nav-link">Logout</a>
+                                <Link to={'/'} className="nav-item nav-link">Home</Link>
+                                {isAdmin && <Link to={'/admin'} className="nav-item nav-link">Admin</Link>}
+                                {isAdmin && <Link to={'/Tunnitleimaus'} className="nav-item nav-link">Tunnitleimaus</Link>}
+                                {isAdmin && <Link to={'/UserFetch'} className="nav-item nav-link">UserFetch</Link>}
+                                {isAdmin && <Link to={'/Opettaja'} className="nav-item nav-link">Opettaja</Link>}
+                                <Link to={'/CreateUser'} className="nav-item nav-link">CreateUser</Link>
+                                <a onClick={this.logout} className="nav-item nav-link" href="/login">Logout</a>
                             </div>
                         </nav>
                     }
@@ -50,6 +58,10 @@ class App extends React.Component {
                                 <div className="col-md-6 offset-md-3">
                                     <PrivateRoute exact path="/" component={HomePage} />
                                     <PrivateRoute path="/admin" roles={[Role.Admin]} component={AdminPage} />
+                                    <PrivateRoute path="/Tunnitleimaus" roles={[Role.Admin]} component={Tunnitleimaus} />
+                                    <PrivateRoute path="/UserFetch" roles={[Role.Admin]} component={UserFetch} />
+                                    <PrivateRoute path="/Opettaja" roles={[Role.Admin]} component={Opettaja} />
+                                    <PrivateRoute path="/CreateUser" component={CreateUser} />
                                     <Route path="/login" component={LoginPage} />
                                 </div>
                             </div>
@@ -61,4 +73,4 @@ class App extends React.Component {
     }
 }
 
-export { App }; 
+export { App };

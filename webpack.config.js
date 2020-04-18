@@ -14,7 +14,7 @@ module.exports = {
             }
         ]
     },
-    
+    // eslint-disable-next-line no-dupe-keys
     resolve: {
         extensions: ['.js', '.jsx'],
         alias: {
@@ -30,7 +30,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'http://localhost:4000/'
+            apiUrl: 'http://localhost:4000'
         })
     }
 }

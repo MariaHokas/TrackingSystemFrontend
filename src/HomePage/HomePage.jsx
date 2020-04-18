@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { userService, authenticationService } from '@/_services';
 
-class HomePage extends React.Component {
+class HomePage extends Component {
     constructor(props) {
         super(props);
 
@@ -22,7 +22,7 @@ class HomePage extends React.Component {
         return (
             <div>
                 <h1>Home</h1>
-                <p>You're logged in with React & JWT!!</p>
+                <p>Kummatkinko?!? & JWT!!</p>
                 <p>Your role is: <strong>{currentUser.role}</strong>.</p>
                 <p>This page can be accessed by all authenticated users.</p>
                 <div>

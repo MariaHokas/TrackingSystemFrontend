@@ -7,9 +7,9 @@ import { PrivateRoute } from '@/_components';
 import { HomePage } from '@/HomePage';
 import { AdminPage } from '@/AdminPage';
 import { LoginPage } from '@/LoginPage';
-import Tunnitleimaus from '../AdminPage/Tunnitleimaus';
+import OppilasLeimaus from '../AdminPage/OppilasLeimaus';
 import UserFetch from '../AdminPage/UserFetch';
-import Opettaja from '../AdminPage/Opettaja';
+// import Opettaja from '../AdminPage/Opettaja';
 import CreateUser from '../Homepage/CreateUser';
 
 class App extends Component {
@@ -44,9 +44,9 @@ class App extends Component {
                             <div className="navbar-nav">
                                 <Link to={'/'} className="nav-item nav-link">Home</Link>
                                 {isAdmin && <Link to={'/admin'} className="nav-item nav-link">Admin</Link>}
-                                {isAdmin && <Link to={'/Tunnitleimaus'} className="nav-item nav-link">Tunnitleimaus</Link>}
+                                {isAdmin && <Link to={'/OppilasLeimaus'} className="nav-item nav-link">OppilasLeimaus</Link>}
                                 {isAdmin && <Link to={'/UserFetch'} className="nav-item nav-link">UserFetch</Link>}
-                                {isAdmin && <Link to={'/Opettaja'} className="nav-item nav-link">Opettaja</Link>}
+                                {/* {isAdmin && <Link to={'/Opettaja'} className="nav-item nav-link">Opettaja</Link>} */}
                                 <Link to={'/CreateUser'} className="nav-item nav-link">CreateUser</Link>
                                 <a onClick={this.logout} className="nav-item nav-link" href="/login">Logout</a>
                             </div>
@@ -58,9 +58,9 @@ class App extends Component {
                                 <div className="col-md-6 offset-md-3">
                                     <PrivateRoute exact path="/" component={HomePage} />
                                     <PrivateRoute path="/admin" roles={[Role.Admin]} component={AdminPage} />
-                                    <PrivateRoute path="/Tunnitleimaus" roles={[Role.Admin]} component={Tunnitleimaus} />
+                                    <PrivateRoute path="/OppilasLeimaus" roles={[Role.Admin]} component={OppilasLeimaus} />
                                     <PrivateRoute path="/UserFetch" roles={[Role.Admin]} component={UserFetch} />
-                                    <PrivateRoute path="/Opettaja" roles={[Role.Admin]} component={Opettaja} />
+                                    {/* <PrivateRoute path="/Opettaja" roles={[Role.Admin]} component={Opettaja} /> */}
                                     <PrivateRoute path="/CreateUser" component={CreateUser} />
                                     <Route path="/login" component={LoginPage} />
                                 </div>

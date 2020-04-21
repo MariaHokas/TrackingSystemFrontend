@@ -14,7 +14,7 @@ class HomePage extends Component {
 
     componentDidMount() {
         const { currentUser } = this.state;
-        userService.getById(currentUser.id).then(userFromApi => this.setState({ userFromApi }));
+        userService.getById(currentUser.id).then(userFromApi => this.setState({ userFromApi }));     
     }
 
     render() {

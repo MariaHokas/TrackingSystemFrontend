@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import moment from 'moment';
 import Table from 'react-bootstrap/Table';
 import { authHeader, handleResponse } from '@/_helpers';
 import { userService, authenticationService } from '@/_services';
@@ -75,9 +75,8 @@ class OppilasRaportti extends Component {
                                  <td>{tunti.tunnitId}</td> 
                                  <td>{tunti.luokkahuoneId}</td>   
                                  <td>{tunti.userId}</td>
-                                 <td>  
-                                 {tunti.sisaan}</td>
-                                 <td>{tunti.ulos}</td>                                                    
+                                 <td>{moment(new Date(tunti.sisaan)).format("DD-MM-YYYY hh:mm:ss")}</td>
+                                 <td>{moment(new Date(tunti.ulos)).format("DD-MM-YYYY hh:mm:ss")}</td>                                                    
                              </tr>                                )}
                             </tbody>
                         </Table>

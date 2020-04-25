@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import OppilasRaportti from './OppilasRaportti';
+import { userService, authenticationService } from '@/_services';
 // import { authHeader, handleResponse } from '@/_helpers';
 
 
 class OppilasLeimaus extends Component {
     constructor(props) {
         super(props);
-        this.state = { TunnitID: '', LuokkahuoneID: '', OppilasID: '', UserID: ''};
+        this.state = { 
+            TunnitID: '', 
+            LuokkahuoneID: '', 
+            UserID: '',
+            currentUser: authenticationService.currentUserValue,
+            currentUserID: ''
+        };
+
         this.handleChangeTunnitID = this.handleChangeTunnitID.bind(this);
         this.handleChangeLuokkahuoneID = this.handleChangeLuokkahuoneID.bind(this);
-        this.handleChangeOppilasID = this.handleChangeOppilasID.bind(this);
         this.handleChangeUserID = this.handleChangeUserID.bind(this);
         this.handleSubmitSisaan = this.handleSubmitSisaan.bind(this);
         this.handleSubmitUlos = this.handleSubmitUlos.bind(this);
@@ -27,10 +33,6 @@ class OppilasLeimaus extends Component {
     handleChangeLuokkahuoneID(event) {
         var syöte = event.target.value;
         this.setState({ ...this.state, LuokkahuoneID: syöte });
-    }
-    handleChangeOppilasID(event) {
-        var syöte = event.target.value;
-        this.setState({ ...this.state, OppilasID: syöte });
     }
     handleChangeUserID(event) {
         var syöte = event.target.value;
@@ -52,22 +54,18 @@ class OppilasLeimaus extends Component {
         // Luodaan tunnitobjekti, johon haetaan state:sta tiedot                     
         const tunnit = {
             TunnitID: this.state.TunnitId,
-            LuokkahuoneID: this.state.LuokkahuoneID,
-            OppilasID: this.state.OppilasID,
-            UserId: this.state.UserId
+            UserID: this.state.currentUserID,
+            LuokkahuoneID: this.state.LuokkahuoneID
         };
 
         // send an asynchronous request to the backend
         const tunnitJson = JSON.stringify(tunnit);
         console.log("tunnitJson = " + tunnitJson);
-        const apiUrl= 'http://localhost:4000/oppilas/Sisaan/';
+        const apiUrl= 'https://localhost:5001/api/oppilas/Sisaan/';
         //    const apiUrl= 'https://webapiharjoituskoodi20191128035915.azurewebsites.net/nw/logins';
         fetch(apiUrl, {
             method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers: {"Accept": "application/json","Content-Type": "application/json"},
             body: tunnitJson
         }).then((response) => response.json())
             .then((json) => {
@@ -86,21 +84,17 @@ class OppilasLeimaus extends Component {
         const tunnit = {
             TunnitID: this.state.TunnitId,
             LuokkahuoneID: this.state.LuokkahuoneID,
-            OppilasID: this.state.OppilasID,
-            UserId: this.state.UserId
+            UserId: this.state.currentUserID
         };
 
         // send an asynchronous request to the backend
         const tunnitJson = JSON.stringify(tunnit);
         console.log("tunnitJson = " + tunnitJson);
-        const apiUrl= 'http://localhost:4000/oppilas/ulos';
+        const apiUrl= 'https://localhost:5001/api/oppilas/ulos';
         //    const apiUrl= 'https://webapiharjoituskoodi20191128035915.azurewebsites.net/nw/logins';
         fetch(apiUrl, {
             method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers: {"Accept": "application/json","Content-Type": "application/json"},
             body: tunnitJson
         }).then((response) => response.json())
             .then((json) => {
@@ -113,18 +107,26 @@ class OppilasLeimaus extends Component {
                 }
             });
     }
+    componentDidMount() {
+        const { currentUser } = this.state;
+        userService.getById(currentUser.id); 
+
+        this.setState({
+            currentUserID: this.state.currentUser.id}
+            );
+      }
 
     render()
      {
+        
         return (
+            
             <div className="margin">
                 <input type="text" placeholder="Luokkahuone" onChange={this.handleChangeLuokkahuoneID} />
-                <input type="text" placeholder="OppilasID" onChange={this.handleChangeOppilasID} /> 
-                <input type="text" placeholder="UserID" onChange={this.handleChangeUserID} /> 
+                <input type = "hidden" value={this.state.currentUserID} placeholder="UserID" onChange={this.handleChangeUserID}  /> 
              
                 <button onClick={this.handleSubmitSisaan} className="btn-circle" type="submit">Sisään</button>                                                             
-                <button onClick={this.handleSubmitUlos} className="btn-circle" type="submit">Ulos</button>      
-                <OppilasRaportti />                          
+                <button onClick={this.handleSubmitUlos} className="btn-circle" type="submit">Ulos</button>                            
             </div>
         );
     }

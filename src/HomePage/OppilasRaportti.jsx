@@ -14,16 +14,14 @@ class OppilasRaportti extends Component {
             start: 0,
             take: 10,
             visible: "table",
-            currentUser: authenticationService.currentUserValue
-      
+            currentUser: authenticationService.currentUserValue    
         }; 
       }
     
       handleClickTable = () => {
         this.setState({visible: "table"})
       }
-    
-    
+     
       handleClickPrev = () => {
         let startvalue = this.state.start;
         if (startvalue > 0) {
@@ -45,71 +43,55 @@ class OppilasRaportti extends Component {
         this.opettajaGetAll().then(tunnit => this.setState({ tunnit }));
       }
     
-    opettajaGetAll() {
-        
+    opettajaGetAll() {   
       // const uri = 'http://localhost:4000/oppilas/r?offset='+this.state.start+'&limit='+this.state.take;
-      const uri = 'http://localhost:4000/oppilas/';
+      const uri = 'http://localhost:4000/api/oppilas/';
       const requestOptions = { method: 'GET', headers: authHeader() };
       return fetch(uri, requestOptions).then(handleResponse);
-    }
-    
+    } 
 
-     
       componentDidMount() {
         this.opettajaGetAll().then(tunnit => this.setState({ tunnit }));  
         const { currentUser } = this.state;
         userService.getById(currentUser.id);    
       }
-    
+
       render() {
         const { tunnit } = this.state;
         const { currentUser} = this.state;
-
         console.log('Render', tunnit);
-        console.log('Käyttäjä ID', currentUser.id)
-        console.log('Käyttäjä ID', tunnit.oppilasId)
         //Ehdollinen return
         if (this.state.visible==="table") {
           return (     
           <div className="box4 kello_page">
             <h1 className="text-center">Tietokantahaku tunnit</h1>
-          <h4> Hello {currentUser.firstName}</h4>
-            {/* <button onClick={this.handleClickHelp}>Näytä opaste</button>
-            <button onClick={this.handleClickAdd}>Lisää User</button> */}
-            
+          <h4> Hello {currentUser.firstName}</h4>           
                         {tunnit && currentUser &&
-                        <Table>
-                             <thead><tr><th>tunnitId</th><th>luokkahuoneId</th><th>oppilasId</th><th>userId</th><th></th></tr></thead>
+                        <Table>                     
+                          <thead><tr><th>tunnitId</th><th>luokkahuoneId</th><th>userId</th><th>Sisään</th><th>Ulos</th></tr></thead>
                             <tbody>                                                      
-                            {tunnit.filter(tunti => tunti.userId === currentUser.id).map(tunti =>
+                            {tunnit.filter(tunti => tunti.userId === currentUser.id).map(tunti =>                        
                                  <tr key={tunti.tunnitId}>
                                  <td>{tunti.tunnitId}</td> 
                                  <td>{tunti.luokkahuoneId}</td>   
-                                 <td>{tunti.oppilasId}</td>
                                  <td>{tunti.userId}</td>
-                                 <td>{tunti.sisaan}</td>
+                                 <td>  
+                                 {tunti.sisaan}</td>
                                  <td>{tunti.ulos}</td>                                                    
-                             </tr>
-                             
-                                )}
+                             </tr>                                )}
                             </tbody>
-                            
                         </Table>
                         }  
                 <button  onClick={this.handleClickPrev}><i className="fas fa-angle-double-left"> Edelliset</i></button>
                 <button  onClick={this.handleClickNext}>Seuraavat <i className="fas fa-angle-double-right"></i></button>
           </div>
         );
-        }  
-    
-          else {
+        } else {
           return (<div className="box1">
             <h1>Sovellusvirhe - lataa sivu uudelleen!</h1>
           </div>
           );
-        }
-        
-    
+        }  
       }
     }
 export default OppilasRaportti;

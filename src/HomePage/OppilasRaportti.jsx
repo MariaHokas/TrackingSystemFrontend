@@ -65,19 +65,19 @@ class OppilasRaportti extends Component {
           return (     
           <div className="box4 kello_page">
             <h1 className="text-center">Tietokantahaku tunnit</h1>
-          <h4> Hello {currentUser.firstName}</h4>           
+          <h4> Hello {currentUser.firstName}</h4>                     
                         {tunnit && currentUser &&
                         <Table>                     
                           <thead><tr><th>tunnitId</th><th>luokkahuoneId</th><th>userId</th><th>Sisään</th><th>Ulos</th></tr></thead>
                             <tbody>                                                      
-                            {tunnit.filter(tunti => tunti.userId === currentUser.id).map(tunti =>                        
-                                 <tr key={tunti.tunnitId}>
+                            {tunnit.filter(tunti => tunti.userId === currentUser.id).map(tunti =>
+                                  <tr key={tunti.tunnitId}>                                                            
                                  <td>{tunti.tunnitId}</td> 
                                  <td>{tunti.luokkahuoneId}</td>   
                                  <td>{tunti.userId}</td>
                                  <td>{moment(new Date(tunti.sisaan)).format("DD-MM-YYYY hh:mm:ss")}</td>
-                                 <td>{moment(new Date(tunti.ulos)).format("DD-MM-YYYY hh:mm:ss")}</td>                                                    
-                             </tr>                                )}
+                                 <td>{moment(new Date(tunti.ulos)).format("DD-MM-YYYY hh:mm:ss")}</td>                                                
+                             </tr>)}
                             </tbody>
                         </Table>
                         }  

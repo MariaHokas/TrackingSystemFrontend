@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { userService, authenticationService } from '@/_services';
 
+
 class HomePage extends Component {
     constructor(props) {
         super(props);
@@ -33,6 +34,7 @@ class HomePage extends Component {
                         </ul>
                     }
                 </div>
+                
             </div>
         );
     }

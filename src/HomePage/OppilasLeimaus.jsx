@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { userService, authenticationService } from '@/_services';
-// import { authHeader, handleResponse } from '@/_helpers';
+import { authHeader, handleResponse } from '@/_helpers';
 
 
 class OppilasLeimaus extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
-            TunnitID: '', 
-            LuokkahuoneID: '', 
+        this.state = {
+            TunnitID: '',
+            LuokkahuoneID: '',
             UserID: '',
             currentUser: authenticationService.currentUserValue,
-            currentUserID: ''
+            currentUserID: '',
+            luokat: [],
         };
 
         this.handleChangeTunnitID = this.handleChangeTunnitID.bind(this);
@@ -23,7 +24,7 @@ class OppilasLeimaus extends Component {
 
     dismiss() {
         console.log("Ollaan TunnitSisaan -dismiss()-rutiinissa - - - - - - ");
-     
+
     }
 
     handleChangeTunnitID(event) {
@@ -61,11 +62,11 @@ class OppilasLeimaus extends Component {
         // send an asynchronous request to the backend
         const tunnitJson = JSON.stringify(tunnit);
         console.log("tunnitJson = " + tunnitJson);
-        const apiUrl= 'https://localhost:5001/api/oppilas/Sisaan/';
+        const apiUrl = 'http://localhost:4000/api/oppilas/Sisaan/';
         //    const apiUrl= 'https://webapiharjoituskoodi20191128035915.azurewebsites.net/nw/logins';
         fetch(apiUrl, {
             method: "POST",
-            headers: {"Accept": "application/json","Content-Type": "application/json"},
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
             body: tunnitJson
         }).then((response) => response.json())
             .then((json) => {
@@ -90,11 +91,11 @@ class OppilasLeimaus extends Component {
         // send an asynchronous request to the backend
         const tunnitJson = JSON.stringify(tunnit);
         console.log("tunnitJson = " + tunnitJson);
-        const apiUrl= 'https://localhost:5001/api/oppilas/ulos';
+        const apiUrl = 'http://localhost:4000/api/oppilas/ulos';
         //    const apiUrl= 'https://webapiharjoituskoodi20191128035915.azurewebsites.net/nw/logins';
         fetch(apiUrl, {
             method: "POST",
-            headers: {"Accept": "application/json","Content-Type": "application/json"},
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
             body: tunnitJson
         }).then((response) => response.json())
             .then((json) => {
@@ -107,26 +108,33 @@ class OppilasLeimaus extends Component {
                 }
             });
     }
+
+    opettajaGetAll() {
+        const uri = 'http://localhost:4000/api/luokat';
+        const requestOptions = { method: 'GET', headers: authHeader() };
+        return fetch(uri, requestOptions).then(handleResponse);
+    }
+
     componentDidMount() {
         const { currentUser } = this.state;
-        userService.getById(currentUser.id); 
+        userService.getById(currentUser.id);
+        this.setState({ currentUserID: this.state.currentUser.id });
+        this.opettajaGetAll().then(luokat => this.setState({ luokat }));
 
-        this.setState({
-            currentUserID: this.state.currentUser.id}
-            );
-      }
+    }
 
-    render()
-     {
-        
+    render() {
+        const { luokat } = this.state;
         return (
-            
+
             <div className="margin">
-                <input type="text" placeholder="Luokkahuone" onChange={this.handleChangeLuokkahuoneID} />
-                <input type = "hidden" value={this.state.currentUserID} placeholder="UserID" onChange={this.handleChangeUserID}  /> 
-             
-                <button onClick={this.handleSubmitSisaan} className="btn-circle" type="submit">Sisään</button>                                                             
-                <button onClick={this.handleSubmitUlos} className="btn-circle" type="submit">Ulos</button>                            
+                <input type="hidden" value={this.state.currentUserID} placeholder="UserID" onChange={this.handleChangeUserID} />
+                <select onChange={this.handleChangeLuokkahuoneID}>{luokat.map(tunti =>
+                    <option key={tunti.luokkahuoneId} value={tunti.luokkahuoneId}>{tunti.luokkaNimi}</option>)}
+                </select>
+
+                <button onClick={this.handleSubmitSisaan} className="btn-circle" type="submit">Sisään</button>
+                <button onClick={this.handleSubmitUlos} className="btn-circle" type="submit">Ulos</button>
             </div>
         );
     }

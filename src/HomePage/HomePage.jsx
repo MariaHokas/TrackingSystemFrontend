@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import { userService, authenticationService } from '@/_services';
-
 
 class HomePage extends Component {
     constructor(props) {
@@ -21,7 +19,7 @@ class HomePage extends Component {
     render() {
         const { currentUser, userFromApi } = this.state;
         return (
-            <div>
+            <div className="box4">
                 <h1>Home</h1>
                 <p>Kummatkinko?!? & JWT!!</p>
                 <p>Your role is: <strong>{currentUser.role}</strong>.</p>

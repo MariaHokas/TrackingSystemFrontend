@@ -9,22 +9,22 @@ import { userService, authenticationService } from '@/_services';
 
 class Dropdown1 extends Component {
   //   state = {
-  //     luokat: [],
+  //     users: [],
   //     selectedLuokka: "",
   //     validationError: ""
   //   };
 
   //   componentDidMount() {
-  //     fetch("http://localhost:4000/api/luokat")
+  //     fetch("http://localhost:4000/api/users")
   //     .then((response) => {
   //       return response.json();
   //     })
   //     .then(data => {
-  //       let luokatFromApi = data.map(luokka => {
+  //       let usersFromApi = data.map(luokka => {
   //         return {value: luokka, display: luokka}
   //       });
   //       this.setState({
-  //         luokat: [{value: '', display: '(Select your favourite team)'}].concat(luokatFromApi)
+  //         users: [{value: '', display: '(Select your favourite team)'}].concat(usersFromApi)
   //       });
   //     }).catch(error => {
   //       console.log(error);
@@ -38,7 +38,7 @@ class Dropdown1 extends Component {
   //       <div>
   //         <select value={this.state.selectedLuokka}              
   //                  onChange={e => this.setState({selectedTeam: e.target.value,validationError: e.target.value === "" ? "You must select your favourite team" : ""})}>
-  //                 {this.state.luokat.map((luokka) => <option key={luokka.value} value={luokka.value}>{luokka.display}</option>)}</select>
+  //                 {this.state.users.map((luokka) => <option key={luokka.value} value={luokka.value}>{luokka.display}</option>)}</select>
   //       </div>
   //       <div style={{color: 'red', marginTop: '5px'}}>{this.state.validationError}</div>
   //       </div>
@@ -49,34 +49,32 @@ class Dropdown1 extends Component {
     super(props);
     console.log("Opettaja-komponentti: constructor");
     this.state = {
-      luokat: [],
+      users: [],
+      selectedTeam: ''
     };
   };
 
 
-  opettajaGetAll() {
-    const uri = 'http://localhost:4000/api/luokat';
+  usersGetAll() {
+    const uri = 'http://localhost:4000/api/helpers/user';
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(uri, requestOptions).then(handleResponse);
   }
 
   componentDidMount() {
-    this.opettajaGetAll().then(luokat => this.setState({ luokat }));
+    this.usersGetAll().then(users => this.setState({ users }));
+
   }
 
-  render() {
-
-    const { luokat } = this.state;
-    console.log('Render', luokat);
+  render() {  
     //Ehdollinen return
-
     return (
       <div className="box4 kello_page">
-        <h1 className="text-center">Tietokantahaku luokat</h1>
+        <h1 className="text-center">Tietokantahaku users</h1>
         <select>
-          {luokat.map(tunti =>
-            <option key={tunti.luokkahuoneId}
-              value={tunti.luokkahuoneId}>{tunti.luokkaNimi}</option>
+          {this.state.users.map(user =>
+            <option key={user.id}
+              value={user.id}>{user.name}</option>
           )}
         </select>
       </div>

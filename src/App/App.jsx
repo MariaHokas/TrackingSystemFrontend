@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Router, Route, Link } from 'react-router-dom';
-
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import { history, Role } from '@/_helpers';
 import { authenticationService } from '@/_services';
 import { PrivateRoute } from '@/_components';
@@ -13,6 +14,8 @@ import UserFetch from '../AdminPage/UserFetch';
 import CreateUser from '../Homepage/CreateUser';
 import OppilasRaportti from '../HomePage/OppilasRaportti';
 import Dropdown1 from '../HomePage/Dropdown1';
+import OpettajaRaportti from '../OpettajaPage/OpettajaRaportti';
+import '../styles.less';
 
 class App extends Component {
     constructor(props) {
@@ -27,46 +30,56 @@ class App extends Component {
     componentDidMount() {
         authenticationService.currentUser.subscribe(x => this.setState({
             currentUser: x,
-            isAdmin: x && x.role === Role.Admin
+            isAdmin: x && x.role === Role.Admin,
+            isUser: x && x.role === Role.User
         }));
     }
 
     logout() {
         authenticationService.logout();
-        history.push('/login');    
+        history.push('/login');
     }
     render() {
-        const { currentUser, isAdmin } = this.state;
-        console.log(currentUser);
+        const { currentUser, isAdmin, isUser } = this.state;
+        // console.log(currentUser);
         return (
             <Router history={history}>
                 <div>
                     {currentUser &&
-                        <nav className="navbar navbar-expand navbar-dark bg-dark">
-                            <div className="navbar-nav">
-                                <Link to={'/'} className="nav-item nav-link">Home</Link>
-                                {isAdmin && <Link to={'/admin'} className="nav-item nav-link">Admin</Link>}
-                                <Link to={'/OppilasLeimaus'} className="nav-item nav-link">OppilasLeimaus</Link>
-                                <Link to={'/OppilasRaportti'} className="nav-item nav-link">OppilasRaportti</Link>
-                                <Link to={'/Dropdown1'} className="nav-item nav-link">Dropdown1</Link>
-                                {isAdmin && <Link to={'/UserFetch'} className="nav-item nav-link">UserFetch</Link>}                            
-                                <Link to={'/CreateUser'} className="nav-item nav-link">CreateUser</Link>
-                                <a onClick={this.logout} className="nav-item nav-link" href="/login">Logout</a>
+                        <Navbar bg="nav_nw" variant="dark" expand="lg" className="nav_nw">
+                            <Navbar.Brand href="#home"></Navbar.Brand>
+                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                            <Navbar.Collapse id="basic-navbar-nav">
+                                <Nav className="mr-auto">
+                                    <Link to={'/'} className="nav-item nav-link">Home</Link>
+                                    {isAdmin && <Link to={'/admin'} className="nav-item nav-link">Admin</Link>}
+                                    <Link to={'/OppilasLeimaus'} className="nav-item nav-link">OppilasLeimaus</Link>
+                                    {isUser && <Link to={'/OppilasRaportti'} className="nav-item nav-link">OppilasRaportti</Link>}
+                                    <Link to={'/Dropdown1'} className="nav-item nav-link">Dropdown1</Link>
+                                    {isAdmin && <Link to={'/UserFetch'} className="nav-item nav-link">UserFetch</Link>}
+                                    <Link to={'/CreateUser'} className="nav-item nav-link">CreateUser</Link>  
+                                    <Link to={'/OpettajaRaportti'} className="nav-item nav-link">OpettajaRaportti</Link>                        
+                                </Nav>
+                            <div className="hellotext">
+                                <h4> Tervetuloa {currentUser.firstName}</h4>
+                                <a onClick={this.logout} className="nav-item nav-link" href="/login">Logout</a>                               
                             </div>
-                        </nav>
+                            </Navbar.Collapse>
+                        </Navbar>
                     }
-                    <div className="jumbotron">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-md-6 offset-md-3">
+                    <div>
+                        <div>
+                            <div>
+                                <div>
                                     <PrivateRoute exact path="/" component={HomePage} />
                                     <Route path="/OppilasLeimaus" component={OppilasLeimaus} />
-                                    <Route path="/OppilasRaportti" component={OppilasRaportti} />
+                                    <PrivateRoute path="/OppilasRaportti" roles={[Role.User]} component={OppilasRaportti} />
                                     <Route path="/Dropdown1" component={Dropdown1} />
-                                    <PrivateRoute path="/admin" roles={[Role.Admin]} component={AdminPage} />                                   
+                                    <PrivateRoute path="/admin" roles={[Role.Admin]} component={AdminPage} />
                                     <PrivateRoute path="/UserFetch" roles={[Role.Admin]} component={UserFetch} />
                                     {/* <PrivateRoute path="/Opettaja" roles={[Role.Admin]} component={Opettaja} /> */}
                                     <PrivateRoute path="/CreateUser" component={CreateUser} />
+                                    <Route path="/OpettajaRaportti" component={OpettajaRaportti} />
                                     <Route path="/login" component={LoginPage} />
                                 </div>
                             </div>

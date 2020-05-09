@@ -44,8 +44,8 @@ class OppilasRaportti extends Component {
       }
     
     opettajaGetAll() {   
-      // const uri = 'http://localhost:4000/oppilas/r?offset='+this.state.start+'&limit='+this.state.take;
-      const uri = 'http://localhost:4000/api/oppilas/';
+      const uri = 'http://localhost:4000/api/opettaja/r?offset='+this.state.start+'&limit='+this.state.take;
+      // const uri = 'http://localhost:4000/api/oppilas/';
       const requestOptions = { method: 'GET', headers: authHeader() };
       return fetch(uri, requestOptions).then(handleResponse);
     } 
@@ -63,20 +63,19 @@ class OppilasRaportti extends Component {
         //Ehdollinen return
         if (this.state.visible==="table") {
           return (     
-          <div className="box4 kello_page">
-            <h1 className="text-center">Tietokantahaku tunnit</h1>
-          <h4> Hello {currentUser.firstName}</h4>                     
+          <div className="raportimg">
+            <h1 className="text-center">Tuntiraportti</h1>                   
                         {tunnit && currentUser &&
-                        <Table>                     
-                          <thead><tr><th>tunnitId</th><th>luokkahuoneId</th><th>userId</th><th>Sisään</th><th>Ulos</th></tr></thead>
+                        <Table responsive="md">                     
+                          <thead><tr><th>Oppilas</th><th>luokkahuone</th><th>Sisään</th><th>Ulos</th></tr></thead>
                             <tbody>                                                      
-                            {tunnit.filter(tunti => tunti.userId === currentUser.id).map(tunti =>
-                                  <tr key={tunti.tunnitId}>                                                            
-                                 <td>{tunti.tunnitId}</td> 
-                                 <td>{tunti.luokkahuoneId}</td>   
-                                 <td>{tunti.userId}</td>
-                                 <td>{moment(new Date(tunti.sisaan)).format("DD-MM-YYYY hh:mm:ss")}</td>
-                                 <td>{moment(new Date(tunti.ulos)).format("DD-MM-YYYY hh:mm:ss")}</td>                                                
+                            {tunnit.filter(tunti => tunti.userId === currentUser.id).map(tunti =>                         
+                                  <tr key={tunti.tunnitId}> 
+                                    <td>{tunti.tunnitId}</td>                                                         
+                                  <td>{tunti.oppilasName}</td>
+                                 <td>{tunti.luokkahuoneNimi}</td>                                   
+                                 <td>{moment(new Date(tunti.sisaan)).format("DD.MM.YYYY hh:mm:ss")}</td>
+                                 <td>{moment(new Date(tunti.ulos)).format("DD.MM.YYYY hh:mm:ss")}</td>                                                
                              </tr>)}
                             </tbody>
                         </Table>

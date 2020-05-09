@@ -22,8 +22,6 @@ class CreateUser extends Component {
                 }}
                 validationSchema={Yup.object().shape({
                     
-                  
-
                     firstname: Yup.string()
                         .required('Firstname is required'),
                     lastname: Yup.string()

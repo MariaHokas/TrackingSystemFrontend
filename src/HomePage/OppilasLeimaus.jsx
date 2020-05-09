@@ -126,13 +126,14 @@ class OppilasLeimaus extends Component {
     render() {
         const { luokat } = this.state;
         return (
-
-            <div className="margin">
-                <input type="hidden" value={this.state.currentUserID} placeholder="UserID" onChange={this.handleChangeUserID} />
-                <select onChange={this.handleChangeLuokkahuoneID}>{luokat.map(tunti =>
-                    <option key={tunti.luokkahuoneId} value={tunti.luokkahuoneId}>{tunti.luokkaNimi}</option>)}
+            <div className="leimaus">
+                <input type="hidden" value={this.state.currentUserID} placeholder="UserID" onChange={this.handleChangeUserID}/>         
+                <select onChange={this.handleChangeLuokkahuoneID}required> 
+                <option defaultValue>Valitse luokahuone</option>
+                    {luokat.map(tunti =>                
+                    <option key={tunti.luokkahuoneId} value={tunti.luokkahuoneId}>{tunti.luokkaNimi}</option>)}                    
                 </select>
-
+                <br/>
                 <button onClick={this.handleSubmitSisaan} className="btn-circle" type="submit">Sisään</button>
                 <button onClick={this.handleSubmitUlos} className="btn-circle" type="submit">Ulos</button>
             </div>

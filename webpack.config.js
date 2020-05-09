@@ -11,7 +11,23 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 loader: 'babel-loader'
-            }
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' },
+                    { loader: 'less-loader' }
+                ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                  {
+                    loader: 'file-loader',
+                  },
+                ],
+            },
         ]
     },
     // eslint-disable-next-line no-dupe-keys
@@ -21,6 +37,7 @@ module.exports = {
             '@': path.resolve(__dirname, 'src/'),
         }
     },
+    
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html'
     })],
@@ -33,4 +50,5 @@ module.exports = {
             apiUrl: 'http://localhost:4000'
         })
     }
+    
 }

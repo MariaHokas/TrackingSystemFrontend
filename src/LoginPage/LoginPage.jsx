@@ -3,6 +3,10 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 
+import Logo from '../images/Careeria_logo_valkoinen.png';
+
+
+
 import { authenticationService } from '@/_services';
 
 class LoginPage extends Component {
@@ -18,6 +22,8 @@ class LoginPage extends Component {
     render() {
         return (
             <div>
+            <div className="login">
+            <div className="login_inner">
                 <h2>Login</h2>
                 <Formik
                     initialValues={{
@@ -64,8 +70,13 @@ class LoginPage extends Component {
                                 <div className={'alert alert-danger'}>{status}</div>
                             }
                         </Form>
+                        
                     )}
-                ></Formik>
+                ></Formik>  
+                </div>  
+                <img className="logo" src={Logo} alt="mikä tämä on?" />           
+            </div>
+            
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { userService, authenticationService } from '@/_services';
 import { authHeader, handleResponse } from '@/_helpers';
+import Button from 'react-bootstrap/Button'
 
 
 class OppilasLeimaus extends Component {
@@ -126,17 +127,41 @@ class OppilasLeimaus extends Component {
     render() {
         const { luokat } = this.state;
         return (
-            <div className="leimaus">
-                <input type="hidden" value={this.state.currentUserID} placeholder="UserID" onChange={this.handleChangeUserID}/>         
-                <select onChange={this.handleChangeLuokkahuoneID}required> 
-                <option defaultValue>Valitse luokahuone</option>
-                    {luokat.map(tunti =>                
-                    <option key={tunti.luokkahuoneId} value={tunti.luokkahuoneId}>{tunti.luokkaNimi}</option>)}                    
-                </select>
-                <br/>
-                <button onClick={this.handleSubmitSisaan} className="btn-circle" type="submit">Sisään</button>
-                <button onClick={this.handleSubmitUlos} className="btn-circle" type="submit">Ulos</button>
-            </div>
+     
+                 <div className="coverLeimaus">
+                <div className="leimaus60">
+                  <div className="coverLeimaus">
+                    <input type="hidden" value={this.state.currentUserID} placeholder="UserID" onChange={this.handleChangeUserID} />
+                    <select onChange={this.handleChangeLuokkahuoneID} required>
+                        <option className="optionDefaultValue" defaultValue>-Valitse luokahuone-</option>
+                        {luokat.map(tunti =>
+                            <option key={tunti.luokkahuoneId} value={tunti.luokkahuoneId}>{tunti.luokkaNimi}</option>)}
+                    </select>
+                    <br />
+                    <button onClick={this.handleSubmitSisaan} className="btn-circle" type="submit">Sisään</button>
+                    <button onClick={this.handleSubmitUlos} className="btn-circle" type="submit">Ulos</button>
+                </div>
+                </div>  
+                <div className="leimaus40">
+                <Button variant="outline-warning" className="outline-warning">
+                    <a rel="noopener noreferrer" target="_blank" href="https://outlook.office365.com">Outlook</a>
+                </Button>
+                <Button variant="outline-warning" className="outline-warning">
+                    <a rel="noopener noreferrer" target="_blank"  href="https://www.careeria.fi/moodle-login/"> Moodle</a>
+                </Button>
+                <Button variant="outline-warning" className="outline-warning">
+                    <a rel="noopener noreferrer" target="_blank"  href="https://wilma.careeria.fi/"> Wilma</a>
+                </Button>
+                <Button variant="outline-warning" className="outline-warning">
+                    <a rel="noopener noreferrer" target="_blank"  href="https://www.careeria.fi/" className="outline-warning"> Careeria.fi</a>
+                </Button>
+
+                <Button variant="outline-warning" className="outline-warning">
+                    <a rel="noopener noreferrer" target="_blank"  href="https://www.careeria.fi/edupoli-oy/">Edupoli oy</a>
+                </Button>
+                </div>
+                </div>
+
         );
     }
 }

@@ -105,16 +105,20 @@ class TunnitAdd extends Component {
                 <form className="box3" onSubmit={this.handleSubmit}>
 
                     {/* <input type="text" placeholder="LuokkahuoneID" onChange={this.handleChangeLuokkahuoneID} /> */}
-                    <select onChange={this.handleChangeLuokkahuoneID}>{luokat.map(tunti =>
+                    <select onChange={this.handleChangeLuokkahuoneID}>
+                    <option className="optionDefaultValue" defaultValue>-Valitse luokahuone-</option>
+                    {luokat.map(tunti =>
                     <option key={tunti.luokkahuoneId} value={tunti.luokkahuoneId}>{tunti.luokkaNimi}</option>)}
                     </select>
                     {/* <input type="text" placeholder="UserId" onChange={this.handleChangeUserId} /> */}
-                    <select onChange={this.handleChangeUserId}>{users.map(user =>
+                    <select onChange={this.handleChangeUserId}>
+                    <option className="optionDefaultValue" defaultValue>-Valitse oppilas-</option>    
+                    {users.map(user =>
                     <option key={user.id}value={user.id}>{user.name}</option>)}
                     </select>
 
-                    <input type="datetime-local" placeholder="Sisaan" onChange={this.handleChangeSisaan} />
-                    <input type="datetime-local" placeholder="Ulos" onChange={this.handleChangeUlos}/>    
+                    <input className="date" type="datetime-local" placeholder="Sisaan" onChange={this.handleChangeSisaan} />
+                    <input className="date" type="datetime-local" placeholder="Ulos" onChange={this.handleChangeUlos}/>    
                     <br />
                 
                     <button type="submit">Tallenna</button>

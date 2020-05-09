@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { userService, authenticationService } from '@/_services';
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 class HomePage extends Component {
     constructor(props) {
@@ -17,24 +19,41 @@ class HomePage extends Component {
     }
 
     render() {
-        const { currentUser, userFromApi } = this.state;
+        const { currentUser} = this.state;
+        if (currentUser.role=== 'User'){
         return (
             <div className="box4">
-                <h1>Home</h1>
-                <p>Kummatkinko?!? & JWT!!</p>
-                <p>Your role is: <strong>{currentUser.role}</strong>.</p>
-                <p>This page can be accessed by all authenticated users.</p>
-                <div>
-                    Current user from secure api end point:
-                    {userFromApi &&
-                        <ul>
-                            <li>{userFromApi.firstName} {userFromApi.lastName}</li>
-                        </ul>
-                    }
+                <div className="coverLetter">
+                <h1>Tervetuloa <strong>{currentUser.firstName}!</strong></h1>
+                <h3>Valitse haluamasi toiminto</h3>              
+                <Button variant="outline-warning" className="outline-warning">
+                <Link to={'/OppilasLeimaus'}>Kirjaudu tunnille</Link>
+                </Button>
+                <Button variant="outline-warning" className="outline-warning">
+                <Link to={'/OppilasRaportti'}>Siirry raporttiin</Link>
+                </Button>        
+                </div>
+            </div>
+            
+        );
+    }
+
+        if (currentUser.role=== 'Admin'){
+            return (
+                <div className="box4">
+                    <div className="coverLetter">
+                    <h1>Tervetuloa <strong>{currentUser.firstName}!</strong></h1>
+                    <p>Olet Admin.</p>
+                    <h1>Tervetuloa <strong>{currentUser.firstName}!</strong></h1>
+                <h3>Valitse haluamasi toiminto</h3>             
+                <Button variant="outline-warning" className="outline-warning">
+                <Link to={'/OpettajaRaportti'}>Siirry raporttiin</Link>
+                </Button>
+                </div>
                 </div>
                 
-            </div>
-        );
+            );
+        }
     }
 }
 

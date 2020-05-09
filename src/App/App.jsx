@@ -61,8 +61,7 @@ class App extends Component {
                                     <Link to={'/OpettajaRaportti'} className="nav-item nav-link">OpettajaRaportti</Link>                        
                                 </Nav>
                             <div className="hellotext">
-                                <h4> Tervetuloa {currentUser.firstName}</h4>
-                                <a onClick={this.logout} className="nav-item nav-link" href="/login">Logout</a>                               
+                                <a onClick={this.logout} className="nav-item nav-link" href="/login">Kirjaudu ulos</a>                               
                             </div>
                             </Navbar.Collapse>
                         </Navbar>

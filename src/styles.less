@@ -18,6 +18,10 @@ html{
   p{
       color: white;
   }
+
+  a{
+    color: white;
+  }
   
   .btn-circle {
     width: 100px;
@@ -48,18 +52,6 @@ html{
   .hellotext{
     margin-right: 20px !important;
     float: right; 
-  }
-  
-  footer{
-    background-color: black;
-    color: white;
-    padding: 1px;
-    margin: 0px;
-    bottom: 0;
-    width: 100%;
-    height: 150px;
-    line-height: 60px;
-    border-bottom-color: black;
   }
   
   .block{
@@ -102,8 +94,14 @@ html{
     background-color: black;
     min-height: 100vh;
     text-align: center;
-    padding: 20px 200px;
     border-radius: 0.2%;
+  }
+
+  .coverLetter{
+    padding: 200px;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.7);
+    min-height: 100vh;
   }
 
   .raportimg {
@@ -134,17 +132,30 @@ html{
     width: 400px;
   }
 
-  .leimaus {
+  .leimaus60 {
     background-image: url(./images/etusivu_taustakuva_iso.png);
     background-size: cover;
-    background-position: center;
+    background-position: left;
     background-repeat: no-repeat;
     background-color: black;
     min-height: 100vh;
+    width: 60%;
     padding: 200px 200px;
     border-radius: 0.2%;
+    float: left;
   }
 
+  .leimaus40{
+    width: 39%;
+    float: left;
+    padding: 100px;
+  }
+
+  .outline-warning{
+    min-width: 300px;
+    padding: 10px;
+    margin-top: 40px;
+  }
   
   h1{
     font-size: 30px;
@@ -201,11 +212,10 @@ html{
   }
   
   input[type="datetime-local"] {
-    border-radius: 2%;
-    margin: 4px;
-    text-align: center;
-    border: 1.5px solid #9CA2A6;
-    box-shadow: 2px 2px 8px #274659;
+    min-width: 250px;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 10px;
   }
   
   input[type="text"] {
@@ -260,13 +270,20 @@ html{
 
   select{
     min-width: 250px;
-    border-radius: 3%;
+    border-radius: 5px;
     padding: 5px;
+    margin-top: 10px;
   }
 
   option{
     font-size: 12px;
     width: 250px;
+  }
+
+  .optionDefaultValue{
+    color: lightgrey;
+    font-style: italic;
+    font-size: small;
   }
 
   

@@ -23,11 +23,6 @@ class OppilasLeimaus extends Component {
         this.handleSubmitUlos = this.handleSubmitUlos.bind(this);
     }
 
-    dismiss() {
-        console.log("Ollaan TunnitSisaan -dismiss()-rutiinissa - - - - - - ");
-
-    }
-
     handleChangeTunnitID(event) {
         var syöte = event.target.value;
         this.setState({ ...this.state, TunnitID: syöte.toUpperCase() });
@@ -52,15 +47,12 @@ class OppilasLeimaus extends Component {
         this.Ulos();
     }
 
-    Sisaan() {
-        // Luodaan tunnitobjekti, johon haetaan state:sta tiedot                     
+    Sisaan() {                 
         const tunnit = {
             TunnitID: this.state.TunnitId,
             UserID: this.state.currentUserID,
             LuokkahuoneID: this.state.LuokkahuoneID
         };
-
-        // send an asynchronous request to the backend
         const tunnitJson = JSON.stringify(tunnit);
         console.log("tunnitJson = " + tunnitJson);
         const apiUrl = 'http://localhost:4000/api/oppilas/Sisaan/';
@@ -76,13 +68,11 @@ class OppilasLeimaus extends Component {
                 console.log(`Response from server: ${success}.`);
                 if (success) {
                     console.log("Pyyntö tunnuksen tallettamiseksi tehty -- -- -- -- --");
-                    this.dismiss();
                 }
             });
     }
 
-    Ulos() {
-        // Luodaan tunnitobjekti, johon haetaan state:sta tiedot                     
+    Ulos() {                    
         const tunnit = {
             TunnitID: this.state.TunnitId,
             LuokkahuoneID: this.state.LuokkahuoneID,
@@ -100,12 +90,10 @@ class OppilasLeimaus extends Component {
             body: tunnitJson
         }).then((response) => response.json())
             .then((json) => {
-                // store the data returned from the backend to the current state
                 const success = json;
                 console.log(`Response from server: ${success}.`);
                 if (success) {
                     console.log("Pyyntö tunnuksen tallettamiseksi tehty -- -- -- -- --");
-                    this.dismiss();
                 }
             });
     }
@@ -121,16 +109,15 @@ class OppilasLeimaus extends Component {
         userService.getById(currentUser.id);
         this.setState({ currentUserID: this.state.currentUser.id });
         this.opettajaGetAll().then(luokat => this.setState({ luokat }));
-
     }
 
     render() {
         const { luokat } = this.state;
         return (
      
-                 <div className="coverLeimaus">
+            <div className="">
                 <div className="leimaus60">
-                  <div className="coverLeimaus">
+                  <div>
                     <input type="hidden" value={this.state.currentUserID} placeholder="UserID" onChange={this.handleChangeUserID} />
                     <select onChange={this.handleChangeLuokkahuoneID} required>
                         <option className="optionDefaultValue" defaultValue>-Valitse luokahuone-</option>
@@ -138,8 +125,10 @@ class OppilasLeimaus extends Component {
                             <option key={tunti.luokkahuoneId} value={tunti.luokkahuoneId}>{tunti.luokkaNimi}</option>)}
                     </select>
                     <br />
+                    <div className="row">
                     <button onClick={this.handleSubmitSisaan} className="btn-circle" type="submit">Sisään</button>
                     <button onClick={this.handleSubmitUlos} className="btn-circle" type="submit">Ulos</button>
+                    </div>
                 </div>
                 </div>  
                 <div className="leimaus40">

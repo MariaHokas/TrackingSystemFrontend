@@ -20,7 +20,6 @@ class TunnitEdit extends Component {
     }
 
     dismiss() {
-        console.log("Ollaan NWCustomerEDIT -dismiss()-rutiinissa - - - - - - ");
         this.props.unmountMe();
     }
 
@@ -68,9 +67,7 @@ class TunnitEdit extends Component {
         console.log('NWtuntirEDIT: . . . . callBackRoutine >>>---' + this.state.tuntiObj.TunnitID);
     }
 
-    componentDidMount() {
-
-        // console.log("NWtuntiEDIT-componentDidMount this.props.tuntiObj.TunnitID: " + this.props.tuntiObj.tunnitId);
+    componentDidMount() {   
         this.setState({
             TunnitID: this.props.tuntiObj.tunnitId,
             LuokkahuoneID: this.props.tuntiObj.luokkahuoneId,
@@ -82,7 +79,6 @@ class TunnitEdit extends Component {
             selected: this.props.tuntiObj.luokkahuoneNimi
         }
         );
-        //Tutkitaan onko arvo null --> jos ei, niin viedään se stateen
         if (this.props.tuntiObj.luokkahuoneNimi) { this.setState({ luokkahuoneNimi: this.props.tuntiObj.luokkahuoneNimi }); };
         if (this.props.tuntiObj.UnitsOnOrder) {
             this.setState({ UnitsOnOrder: this.props.tuntiObj.UnitsOnOrder });
@@ -93,11 +89,10 @@ class TunnitEdit extends Component {
         
     }
 
-    InsertoiKantaan() {
-        // Luodaan tuntiobjekti, johon haetaan state:sta tiedot                     
+    InsertoiKantaan() {                   
         const tunti = {
             LuokkahuoneID: this.state.LuokkahuoneID,
-            UserID: this.state.UserID,
+            UserID: parseInt(this.state.UserID),
             Sisaan: this.state.Sisaan,
             Ulos: this.state.Ulos
         };
@@ -106,7 +101,7 @@ class TunnitEdit extends Component {
         // send an asynchronous request to the backend
         const tuntiJson = JSON.stringify(tunti);
         console.log("tuntiJson = " + tuntiJson);
-        const apiUrl = 'https://localhost:5001/api/opettaja/' + this.state.TunnitID;
+        const apiUrl = 'http://localhost:4000/api/opettaja/' + this.state.TunnitID;
         //    const apiUrl= 'https://webapiharjoituskoodi20191128035915.azurewebsites.net/nw/customer/'+this.state.TunnitID;
         console.log(apiUrl)
         fetch(apiUrl, {
@@ -146,7 +141,6 @@ class TunnitEdit extends Component {
         return (
             <div className="box3">
                 <form onSubmit={this.handleSubmit}>
-                    {/* <label>tuntinimi</label><input type="text" value={this.state.LuokkahuoneID} title="Syötä nimi" placeholder="LuokkahuoneID" onChange={this.handleChangeLuokkahuoneID} /> */}
                     <select onChange={this.handleChangeLuokkahuoneID} >
                         <option className="optionDefaultValue" key={this.state.LuokkahuoneID} value={this.state.LuokkahuoneID}>{this.state.luokkahuoneNimi}</option>
                         {luokat.map(tunti =>
@@ -158,8 +152,6 @@ class TunnitEdit extends Component {
                         {users.map(user =>
                             <option key={user.id} value={user.id}>{user.name}</option>)}
                     </select>
-
-                    {/* <label>Toimittaja</label><input type="text" value={this.state.UserID} placeholder="UserID" onChange={this.handleChangeUserID} /> */}
                     <label>Sisaan</label><input type="datetime-local" value={this.state.Sisaan} placeholder="Sisaan" onChange={this.handleChangeSisaan} />
                     <label>Ulos</label><input type="datetime-local" value={this.state.Ulos} placeholder="Ulos" onChange={this.handleChangeUlos} />
                     <br />

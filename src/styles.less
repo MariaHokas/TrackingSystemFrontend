@@ -1,3 +1,8 @@
+.testi{
+
+  background-color: lightyellow;
+}
+
 html{
     height: 100vh;
     margin: 0;
@@ -13,6 +18,7 @@ html{
     padding: 0;
     background-color: black;
     color: white;
+    overflow-x: hidden;
   }
   
   p{
@@ -47,6 +53,10 @@ html{
     color: #ffc107 !important;
     font-size: 16px;
     text-transform: uppercase;
+  }
+
+  a.nav-item.nav-link:hover{
+    background-color: #323232;
   }
 
   .hellotext{
@@ -92,7 +102,7 @@ html{
     background-position: center;
     background-repeat: no-repeat;
     background-color: black;
-    min-height: 100vh;
+    min-height: 99vh;
     text-align: center;
     border-radius: 0.2%;
   }
@@ -101,35 +111,41 @@ html{
     padding: 200px;
     background-size: cover;
     background-color: rgba(0, 0, 0, 0.7);
-    min-height: 100vh;
+    min-height: 99vh;
   }
 
   .raportimg {
     background-image: url(./images/opettaja_taustakuva_iso.png);
     background-size: cover;
-    background-position: right;
+    background-position: absolute;
     background-repeat: no-repeat;
     background-color: black;
     min-height: 100vh;
     width: 100%;
     text-align: center;
-    padding: 20px 300px;
+    padding: 20px 250px;
   }
   .login{
     background-image: url(./images/etusivu_taustakuva_iso.png);
     background-size: cover;
-    min-height: 100vh;
+    min-height: 99vh;
     text-align: center;   
   }
 
   .login_inner{
-    padding: 230px 400px;
+    padding: 230px 500px;
   }
 
   .logo{
     float: right;
     margin-right: 20px;
-    width: 400px;
+    width: 300px;
+  }
+
+  .nav_logo{
+    float: left;
+    margin: 0;
+    width: 150px;
   }
 
   .leimaus60 {
@@ -174,7 +190,7 @@ html{
     font-weight: bold;
   }
   #deletetbl tr:nth-child(odd) {
-    background-color: #f2f2f2;
+    background-color: black;
     font-size: 14px;
     font-style: oblique;
     font-weight: bold;
@@ -263,6 +279,11 @@ html{
     color: #f2f2f2;
     font-size: 16px;
   }
+
+  .fa-bars{
+    color: #f2f2f2;
+    font-size: 16px;
+  }
   
   i:hover{
     color: black;
@@ -302,11 +323,67 @@ html{
       background-position: center;
       background-repeat: no-repeat;
       background-color: black;
-      min-height: 80vh;
+      min-height: 99vh;
       text-align: center;
-      padding: 20px 20px;
-      border-radius: 0.2%;
+      padding: 0px;
       overflow-x: auto;
+    }
+    .coverLetter{
+      padding: 150px;
+    }
+  
+    .login_inner{
+      padding: 160px 300px;
+    }
+  
+    .logo{
+      float: right;
+      right: 20px;
+      width: 300px;
+    }
+
+    .leimaus60 {
+    padding: 0;
+    padding-top: 280px;
+    padding-left: 200px;
+    }
+
+    .raportimg {
+      background-image: url(./images/opettaja_taustakuva_iso.png);
+      background-size: cover;
+      background-position: absolute;
+      background-repeat: no-repeat;
+      background-color: black;
+      min-height: 100vh;
+      width: 100%;
+      text-align: center;
+      padding: 50px 50px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .login_inner{
+      padding: 260px 200px;
+    }
+    .leimaus60 {
+      width: 100%;
+      padding: 0;
+      padding-top: 380px;
+      padding-left: 200px;
+      }
+
+    .leimaus40{
+      width: 100%;
+      padding-left: 250px; 
+    }
+
+    .hellotext{
+      margin-left: 0;
+      float: none; 
+    }
+    .hellotext a{
+      margin-left: 0;
+      float: none; 
     }
   }
   
@@ -327,10 +404,65 @@ html{
       background-color: white;
       min-height: 80vh;
       text-align: center;
-      padding: 20px 20px;
-      border-radius: 0.2%;
+      padding: 0px;
       overflow-x: auto;
     }
-  
+
+    .coverLetter{
+      padding: 0px;
+      padding-top: 0px;
+    }
+
+    .login_inner{
+      padding: 0px 100px;
+      padding-top: 50px;
+    }
+    .logo{
+      float: none;
+      padding-top: 100px;
+      left: 50px;
+      bottom: 0px;
+      width: 200px;
+    }
+
+    .leimaus60 {
+      width: 100%;
+      padding: 0;
+      padding-top: 30px;
+      padding-left: 100px; 
+      }
+
+    .leimaus40{
+      width: 100%;
+      padding-left: 80px; 
+    }
+
+  }
+
+  @media screen and (max-width: 400px) {
+
+    .login_inner{
+      padding: 0px 20px;
+      padding-top: 150px;
+    }
+    .logo{
+      float: none;
+      padding-top: 100px;
+      left: 50px;
+      bottom: 0px;
+      width: 200px;
+    }
+    .leimaus60 {
+      width: 100%;
+      padding: 0;
+      padding-top: 200px;
+      padding-left: 70px;
+      }
+
+    .leimaus40{
+      margin-top: 0;
+      width: 100%;
+      padding-left: 30px; 
+    }
   }
   

@@ -6,8 +6,8 @@ export const userService = {
     getAll,
     getById,
     deleteID,
-    deleteTunti
-    
+    deleteTunti,
+    create  
 };
 
 function getAll() {
@@ -18,6 +18,11 @@ function getAll() {
 function getById(id) {
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+}
+function create(user) {
+    const requestOptions = { method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(user)};
+    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
 }
 
 function deleteID(id) {

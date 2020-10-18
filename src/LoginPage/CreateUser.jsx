@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { authenticationService } from '@/_services';
+import { userService } from '@/_services';
 
-import config from 'config';
-import { handleResponse } from '@/_helpers';
 
 class CreateUser extends Component {
 
@@ -11,14 +11,14 @@ class CreateUser extends Component {
         return (
             <Formik
                 initialValues={{
-               user:{
+                   
                     firstname: '',
                     lastname: '',
                     username: '',
-                    email: '',
+                    role: '',
                     password: '',
                     confirmPassword: '', 
-                }         
+                       
                 }}
                 validationSchema={Yup.object().shape({
                     
@@ -28,9 +28,6 @@ class CreateUser extends Component {
                         .required('Lastname is required'),
                     username: Yup.string()
                         .required('Username is required'),
-                    email: Yup.string()
-                        .email('Email is invalid')
-                        .required('Email is required'),
                     password: Yup.string()
                         .min(4, 'Password must be at least 6 characters')
                         // .matches(/[A-Z]{2}\d{2}[A-Z]{2}\d{4}$/i,'invalid Password')
@@ -40,30 +37,27 @@ class CreateUser extends Component {
                         .required('Confirm Password is required')
                    
                     
-                })
-            
-            }
-
-                
-                onSubmit={({  user}, { setStatus, setSubmitting }) => {
-                    setStatus();   
-                    console.log(user);       
-                    const requestOptions = {
-                        method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer my-token',
-                            'My-Custom-Header': 'foobar'
+                })            
+            }               
+            onSubmit={({ firstname, username, password }, { setStatus, setSubmitting }) => {
+                console.log(firstname, username, password)
+                const user = [firstname, username, password]
+                setStatus();
+                authenticationService.register(user)
+                    .then(
+                        user => {
+                            const { from } = this.props.location.state || { from: { pathname: "/" } };
+                            this.props.history.push(from);
                         },
-                        body: JSON.stringify({ user })
-                    };
-                    fetch('http://localhost:4000/users/register', requestOptions)
-                        .then(response => response.json())
-                        .then(data => this.setState({ Id: data.id }));
-                                  
-                }}
+                        error => {
+                            setSubmitting(false);
+                            setStatus(error);
+                        }
+                    );
+            }}
                 render={({ errors, status, touched, isSubmitting }) => (
                     <Form>
+                        <div className="login_inner">
                          <div className="form-group">
                             <label htmlFor="firstname">Firstname</label>
                             <Field name="firstname" type="text" className={'form-control' + (errors.firstname && touched.firstname ? ' is-invalid' : '')} />
@@ -80,11 +74,6 @@ class CreateUser extends Component {
                             <ErrorMessage name="username" component="div" className="invalid-feedback" />
                         </div>
                       
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
-                            <ErrorMessage name="email" component="div" className="invalid-feedback" />
-                        </div>
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
                             <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
@@ -104,6 +93,7 @@ class CreateUser extends Component {
                             {status &&
                                 <div className={'alert alert-danger'}>{status}</div>
                             }
+                            </div>
                     </Form>
                 )}
             ></Formik>
@@ -111,4 +101,4 @@ class CreateUser extends Component {
     }
 }
 
-export default CreateUser; 
+export { CreateUser };

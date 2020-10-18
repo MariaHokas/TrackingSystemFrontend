@@ -20,7 +20,7 @@ class HomePage extends Component {
 
     render() {
         const { currentUser} = this.state;
-        if (currentUser.role=== 'User'){
+        if (currentUser.role === 'User'){
         return (
             <div className="box4">
                 <div className="coverLetter">
@@ -38,20 +38,18 @@ class HomePage extends Component {
         );
     }
 
-        if (currentUser.role=== 'Admin'){
+        if (currentUser.role === 'Admin'){
             return (
                 <div className="box4">
                     <div className="coverLetter">
                     <h1>Tervetuloa <strong>{currentUser.firstName}!</strong></h1>
-                    <p>Olet Admin.</p>
                     <h1>Tervetuloa <strong>{currentUser.firstName}!</strong></h1>
                 <h3>Valitse haluamasi toiminto</h3>             
                 <Button variant="outline-warning" className="outline-warning">
                 <Link to={'/OpettajaRaportti'}>Siirry raporttiin</Link>
                 </Button>
                 </div>
-                </div>
-                
+                </div>              
             );
         }
     }

@@ -2,26 +2,18 @@ import React, { Component } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-
 import Logo from '../images/Careeria_logo_valkoinen.png';
-
-
-
 import { authenticationService } from '@/_services';
 
 class LoginPage extends Component {
     constructor(props) {
         super(props);
-
-        // redirect to home if already logged in
         if (authenticationService.currentUserValue) { 
             this.props.history.push('/');
         }
     }
-
     render() {
         return (
-            <div>
             <div className="login">
             <div className="login_inner">
                 <h2>Login</h2>
@@ -35,6 +27,7 @@ class LoginPage extends Component {
                         password: Yup.string().required('Password is required')
                     })}
                     onSubmit={({ username, password }, { setStatus, setSubmitting }) => {
+                        console.log(username, password)
                         setStatus();
                         authenticationService.login(username, password)
                             .then(
@@ -61,7 +54,7 @@ class LoginPage extends Component {
                                 <ErrorMessage name="password" component="div" className="invalid-feedback" />
                             </div>
                             <div className="form-group">
-                                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>Login</button>
+                                <button type="submit" className="btn btn-warning" disabled={isSubmitting}>Login</button>
                                 {isSubmitting &&
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Google_Keep_icon.svg" alt="mikä tämä on?" />
                                 }
@@ -69,15 +62,14 @@ class LoginPage extends Component {
                             {status &&
                                 <div className={'alert alert-danger'}>{status}</div>
                             }
+                            
                         </Form>
                         
                     )}
                 ></Formik>  
                 </div>  
                 <img className="logo" src={Logo} alt="mikä tämä on?" />           
-            </div>
-            
-            </div>
+            </div>            
         )
     }
 }

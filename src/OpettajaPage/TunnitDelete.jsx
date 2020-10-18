@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 
 class TunnitDelete extends Component {
@@ -14,7 +15,6 @@ class TunnitDelete extends Component {
         this.handlePerformDelete = this.handlePerformDelete.bind(this);
     }
     dismiss() {
-        console.log("Ollaan NWCustomerDelete -dismiss()-rutiinissa - - - - - - ");
         this.props.unmountMe();
     }
     handleChangeTunnitID(event) {
@@ -47,8 +47,7 @@ class TunnitDelete extends Component {
         console.log('NWCustomerDelete: . . . . callBackRoutine >>>---' + this.state.tuntiObj.TunnitID);
     }
 
-    componentDidMount() {
-        console.log("NWCustomerDelete-componentDidMount this.props.tuntiObj: " + this.props.tuntiObj.tunnitId);
+    componentDidMount() {    
         this.setState({
             TunnitID: this.props.tuntiObj.tunnitId,
             LuokkahuoneNimi: this.props.tuntiObj.luokkahuoneNimi,
@@ -64,14 +63,12 @@ class TunnitDelete extends Component {
         };
     }
 
-    handlePerformDelete(event) {
-        console.log('NWCutomerDelete . handlePerformDelete . . . . delete:ssä', this.state.TunnitID);
+    handlePerformDelete(event) {    
         event.preventDefault();
         this.NWDeleteRestApista();
     }
 
     ResetDeleteDone() {
-        console.log('ResetDeleteDone ???????????????');
         this.setState({
             TunnitID: '',
         })
@@ -97,7 +94,6 @@ class TunnitDelete extends Component {
                 if (success) {
                     console.log("Pyyntö tunnuksen poistamiseksi tehty -- -- -- -- --");
                     this.dismiss();
-                    //this.ResetDeleteDone();
                 }
             });
     }
@@ -110,8 +106,8 @@ class TunnitDelete extends Component {
                         <tr><td className="otsikko">tuntitunti:</td><td>{this.state.TunnitID}</td></tr>
                         <tr><td className="otsikko">LuokkahuoneNimi:</td><td>{this.state.LuokkahuoneNimi}</td></tr>
                         <tr><td className="otsikko">oppilasName:</td><td>{this.state.oppilasName} </td></tr>
-                        <tr><td className="otsikko">Sisaan:</td><td>{this.state.Sisaan} </td></tr>
-                        <tr><td className="otsikko">Ulos:</td><td>{this.state.Ulos} </td></tr>
+                        <tr><td className="otsikko">Sisaan:</td><td>{moment(new Date(this.state.Sisaan)).format("DD.MM.YYYY hh:mm a")}</td></tr>
+                        <tr><td className="otsikko">Ulos:</td><td>{moment(new Date(this.state.Ulos)).format("DD.MM.YYYY hh:mm a")}</td></tr>
                     </tbody>
                 </table>
                 <br />
